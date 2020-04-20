@@ -196,7 +196,9 @@
 
     <div class="btn-group mr-2">
         <button type="button" onclick="location.href='/index'"  class="btn btn-sm btn-outline-secondary">Администратор</button>
-        <button type="button" class="btn btn-sm btn-outline-secondary">Выйти</button>
+        <form action="/logout" method="post">
+            <button type="submit" class="btn btn-sm btn-outline-secondary">Выйти</button>
+        </form>
     </div>
 </nav>
 
