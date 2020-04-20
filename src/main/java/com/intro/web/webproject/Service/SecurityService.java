@@ -12,7 +12,7 @@ public class SecurityService extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().
                 authorizeRequests()
-                .antMatchers("/").permitAll()
+                .antMatchers("/", "/api/client", "/api/employee", "/api/queue").permitAll()
                 .antMatchers("/**").access("hasRole('Employers Administration')")
                 .and()
                 .formLogin();
