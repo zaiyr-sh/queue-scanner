@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <title>QR-Queue</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <meta name="msapplication-config" content="/docs/4.4/assets/img/favicons/browserconfig.xml">
+    <meta name="theme-color" content="#563d7c">
+    <link href="../css/dashboard.css" type="text/css" rel="stylesheet">
+    <style type="text/css">
+        /* Chart.js */
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }</style>
+</head>
+<style>
+    .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+            font-size: 3.5rem;
+        }
+    }
+
+    body {
+        font-size: .875rem;
+    }
+
+    .feather {
+        width: 16px;
+        height: 16px;
+        vertical-align: text-bottom;
+    }
+
+    /*
+     * Sidebar
+     */
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 100;
+        padding: 48px 0 0;
+        box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    }
+
+    .sidebar-sticky {
+        position: relative;
+        top: 0;
+        height: calc(100vh - 48px);
+        padding-top: .5rem;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    @supports ((position: -webkit-sticky) or (position: sticky)) {
+        .sidebar-sticky {
+            position: -webkit-sticky;
+            position: sticky;
+        }
+    }
+
+    .sidebar .nav-link {
+        font-weight: 500;
+        color: #333;
+    }
+
+    .sidebar .nav-link .feather {
+        margin-right: 4px;
+        color: #999;
+    }
+
+    .sidebar .nav-link.active {
+        color: #007bff;
+    }
+
+    .sidebar .nav-link:hover .feather,
+    .sidebar .nav-link.active .feather {
+        color: inherit;
+    }
+
+    .sidebar-heading {
+        font-size: .75rem;
+        text-transform: uppercase;
+    }
+
+    [role="main"] {
+        padding-top: 133px;
+    }
+
+    @media (min-width: 768px) {
+        [role="main"] {
+            padding-top: 48px;
+        }
+    }
+
+    .navbar-brand {
+        padding-top: .75rem;
+        padding-bottom: .75rem;
+        font-size: 1rem;
+        background-color: rgba(0, 0, 0, .25);
+        box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+    }
+
+    .navbar .form-control {
+        padding: .75rem 1rem;
+        border-width: 0;
+        border-radius: 0;
+    }
+
+    .form-control-dark {
+        color: #fff;
+        background-color: rgba(255, 255, 255, .1);
+        border-color: rgba(255, 255, 255, .1);
+    }
+
+    .form-control-dark:focus {
+        border-color: transparent;
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: auto auto auto auto auto;
+        padding: 10px;
+    }
+
+    .grid-item {
+        padding: 25px;
+        font-size: 30px;
+        text-align: center;
+        margin: 5px;
+    }
+
+
+    .jumb {
+        display: inline-flex;
+        width: 100%;
+    }
+
+    .form_block {
+        /*position: -webkit-sticky;*/
+        position: fixed;
+        margin-bottom: 15%;
+        margin-left: 53%;
+        width: 500px;
+        margin-top: -4%;
+        /*border: 1px solid grey;*/
+        /*padding: 40px;*/
+    }
+
+
+    .form-style-7 {
+        background: #343a40;
+        border-radius: 2px;
+        padding: 20px;
+        font-family: Georgia, "Times New Roman", Times, serif;
+    }
+
+    .form-style-7 h1 {
+        display: block;
+        text-align: center;
+        padding: 0;
+        margin: 0px 0px 20px 0px;
+        color: #fff;
+        font-size: x-large;
+    }
+
+    .form-style-7 ul {
+        list-style: none;
+        padding: 0;
+        margin-right: 10%;
+    }
+
+    .card-body {
+        padding: 0;
+        margin: 0;
+    }
+
+    .form-style-7 li {
+        display: block;
+        padding: 9px;
+        border: 1px solid #343a40;
+        margin-bottom: 10px;
+        border-radius: 3px;
+    }
+
+    .form-style-7 li:last-child {
+        border: none;
+        margin-bottom: 0px;
+        text-align: center;
+    }
+
+    .form-style-7 li > label {
+        display: block;
+        float: left;
+        margin-top: -19px;
+        background: #343a40;
+        height: 20px;
+        padding: 2px 5px 2px 5px;
+        color: #fff;
+        font-size: 14px;
+        overflow: hidden;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .form-style-7 input[type="text"],
+    .form-style-7 input[type="date"],
+    .form-style-7 input[type="datetime"],
+    .form-style-7 input[type="email"],
+    .form-style-7 input[type="number"],
+    .form-style-7 input[type="search"],
+    .form-style-7 input[type="time"],
+    .form-style-7 input[type="url"],
+    .form-style-7 input[type="password"],
+    .form-style-7 textarea,
+    .form-style-7 select {
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        width: 100%;
+        display: block;
+        outline: none;
+        border: none;
+        height: 35px;
+        line-height: 25px;
+        font-size: 16px;
+        padding: 6px;
+        font-family: Georgia, "Times New Roman", Times, serif;
+    }
+
+    .form-style-7 input[type="text"]:focus,
+    .form-style-7 input[type="date"]:focus,
+    .form-style-7 input[type="datetime"]:focus,
+    .form-style-7 input[type="email"]:focus,
+    .form-style-7 input[type="number"]:focus,
+    .form-style-7 input[type="search"]:focus,
+    .form-style-7 input[type="time"]:focus,
+    .form-style-7 input[type="url"]:focus,
+    .form-style-7 input[type="password"]:focus,
+    .form-style-7 textarea:focus,
+    .form-style-7 select:focus {
+    }
+
+    .form-style-7 li > span {
+        background: #F3F3F3;
+        display: block;
+        padding: 3px;
+        text-align: center;
+        color: #343a40;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 11px;
+    }
+
+    .form-style-7 textarea {
+        resize: none;
+    }
+
+    .form-style-7 input[type="submit"],
+    .form-style-7 input[type="button"] {
+        background: #2471FF;
+        border: none;
+        padding: 10px 20px 10px 20px;
+        border-bottom: 3px solid #5994FF;
+        border-radius: 3px;
+        color: #D2E2FF;
+    }
+
+    .form-style-7 input[type="submit"]:hover,
+    .form-style-7 input[type="button"]:hover {
+        background: #6B9FFF;
+        color: #fff;
+    }
+
+
+</style>
+
+<body>
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">QR-Queue</a>
+
+    <div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
+         class="chartjs-size-monitor">
+        <div class="chartjs-size-monitor-expand"
+             style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+            <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+        </div>
+        <div class="chartjs-size-monitor-shrink"
+             style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+            <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+        </div>
+    </div>
+    <div class="btn-group mr-2">
+        <button type="button" onclick="location.href='/index'" class="btn btn-sm btn-outline-secondary">Администратор</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary">Выйти</button>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky"><h6
+                    class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                <span>Панель управления</span>
+                <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report"></a>
+            </h6>
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link" href="/index">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather feather-home">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                        Главная страница <span class="sr-only">(current)</span>
+                    </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="/employee">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather feather-users">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Работники
+                    </a>
+                    </li>
+
+                    <li class="nav-item"><a class="nav-link" href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather feather-file-text">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                        О нас
+                    </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div class="table-responsive">
+                <div class="jumbotron jumbotron-fluid jumb">
+                    <div class="container">
+                        <h2 class="display-4">Работники:</h2>
+                        <table class="table" style="width: 60%">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Имя</th>
+                                <th scope="col">E~mail</th>
+                            </tr>
+                            </thead>
+                            {{#employees}}
+                                <tbody>
+                                <tr>
+                                    <th scope="row">{{id}}</th>
+                                    <td>{{username}}</td>
+                                    <td>{{email}}</td>
+                                </tr>
+                                </tbody>
+                            {{/employees}}
+                        </table>
+                    </div>
+
+
+                    <div class="form_block">
+                        <div class="accordion" id="accordionExample">
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                                                data-target="#collapseOne" aria-expanded="true"
+                                                aria-controls="collapseOne">
+                                            Добавить нового работника
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                                     data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <form class="form-style-7" method="post">
+                                            <ul>
+                                                <li>
+                                                    <label for="name">Name</label>
+                                                    <input type="text" name="name" maxlength="100">
+                                                    <span>Введите Имя Пользователя</span>
+                                                </li>
+                                                <li>
+                                                    <label for="email">E~mail</label>
+                                                    <input type="email" name="email" maxlength="100">
+                                                    <span>Введите E~mail</span>
+                                                </li>
+                                                <li>
+                                                    <label for="password">Пароль</label>
+                                                    <input type="password" name="password" maxlength="100">
+                                                    <span>Введите пароль</span>
+                                                </li>
+                                                <li>
+                                                    <label for="bio">Очередь</label>
+                                                    <select class="custom-select" name="queueId">
+                                                        {{#queues}}
+                                                            <option value={{id}}>{{id}} {{name}}</option>
+                                                        {{/queues}}
+                                                    </select>
+                                                    <span>Выберите очередь</span>
+                                                </li>
+                                                <li>
+                                                    <input type="submit" value="Добавить">
+                                                </li>
+                                            </ul>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingTwo">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                                data-target="#collapseTwo" aria-expanded="false"
+                                                aria-controls="collapseTwo">
+                                            Изменить пользователя
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                     data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <form class="form-style-7" method="post" action="/employeePut">
+                                            <ul>
+                                                <li>
+                                                    <label for="ID">ID</label>
+                                                    <select class="custom-select" name="idPut">
+                                                        {{#employees}}
+                                                            <option value={{id}}>{{id}}</option>
+                                                        {{/employees}}
+                                                    </select>
+                                                    <span>Выберите Пользователя</span>
+                                                </li>
+                                                <li>
+                                                    <label for="name">Name</label>
+                                                    <input type="text" name="namePut" maxlength="100">
+                                                    <span>Введите Имя Пользователя</span>
+                                                </li>
+                                                <li>
+                                                    <label for="email">E~mail</label>
+                                                    <input type="email" name="emailPut" maxlength="100">
+                                                    <span>Введите E~mail</span>
+                                                </li>
+                                                <li>
+                                                    <label for="password">Пароль</label>
+                                                    <input type="password" name="passwordPut" maxlength="100">
+                                                    <span>Введите пароль</span>
+                                                </li>
+                                                <li>
+                                                    <label for="bio">Очередь</label>
+                                                    <select class="custom-select" name="queueIdPut">
+                                                        {{#queues}}
+                                                            <option value={{id}}>{{id}} {{name}}</option>
+                                                        {{/queues}}
+                                                    </select>
+                                                    <span>Выберите очередь</span>
+                                                </li>
+                                                <li>
+                                                    <input type="submit" value="Изменить">
+                                                </li>
+                                            </ul>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+
+</body>
+</html>
