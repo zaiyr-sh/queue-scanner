@@ -216,7 +216,6 @@
 
     .form-style-7 li {
         display: block;
-        padding: 9px;
         border: 1px solid #343a40;
         margin-bottom: 10px;
         border-radius: 3px;
@@ -329,8 +328,8 @@
     </div>
     <div class="btn-group mr-2">
         <button type="button" onclick="location.href='/index'" class="btn btn-sm btn-outline-secondary">Администратор</button>
-        <form action="/logout" method="post">
-        <button type="submit" class="btn btn-sm btn-outline-secondary">Выйти</button>
+        <form action="/logout" id="logout" method="post">
+        <button type="submit"  onclick="$('#logout').submit()" class="btn btn-sm btn-outline-secondary">Выйти</button>
         </form>
     </div>
 </nav>
@@ -428,22 +427,18 @@
                                         <form class="form-style-7" method="post">
                                             <ul>
                                                 <li>
-                                                    <label for="name">Name</label>
                                                     <input type="text" name="name" maxlength="100">
                                                     <span>Введите Имя Пользователя</span>
                                                 </li>
                                                 <li>
-                                                    <label for="email">E~mail</label>
                                                     <input type="email" name="email" maxlength="100">
                                                     <span>Введите E~mail</span>
                                                 </li>
                                                 <li>
-                                                    <label for="password">Пароль</label>
                                                     <input type="password" name="password" maxlength="100">
                                                     <span>Введите пароль</span>
                                                 </li>
                                                 <li>
-                                                    <label for="bio">Очередь</label>
                                                     <select class="custom-select" name="queueId">
                                                         {{#queues}}
                                                             <option value={{id}}>{{id}} {{name}}</option>
@@ -475,7 +470,6 @@
                                         <form class="form-style-7" method="post" action="/employeePut">
                                             <ul>
                                                 <li>
-                                                    <label for="ID">ID</label>
                                                     <select class="custom-select" name="idPut">
                                                         {{#employees}}
                                                             <option value={{id}}>{{id}}</option>
@@ -484,22 +478,18 @@
                                                     <span>Выберите Пользователя</span>
                                                 </li>
                                                 <li>
-                                                    <label for="name">Name</label>
                                                     <input type="text" name="namePut" maxlength="100">
                                                     <span>Введите Имя Пользователя</span>
                                                 </li>
                                                 <li>
-                                                    <label for="email">E~mail</label>
                                                     <input type="email" name="emailPut" maxlength="100">
                                                     <span>Введите E~mail</span>
                                                 </li>
                                                 <li>
-                                                    <label for="password">Пароль</label>
                                                     <input type="password" name="passwordPut" maxlength="100">
                                                     <span>Введите пароль</span>
                                                 </li>
                                                 <li>
-                                                    <label for="bio">Очередь</label>
                                                     <select class="custom-select" name="queueIdPut">
                                                         {{#queues}}
                                                             <option value={{id}}>{{id}} {{name}}</option>

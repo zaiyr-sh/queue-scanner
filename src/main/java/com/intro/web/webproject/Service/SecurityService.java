@@ -1,9 +1,10 @@
-package com.intro.web.webproject.Service;
+package com.intro.web.webproject.service;
 
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
 public class SecurityService extends WebSecurityConfigurerAdapter {
@@ -17,7 +18,9 @@ public class SecurityService extends WebSecurityConfigurerAdapter {
                         "/api/queue/", "/api/queue", "/api/queue/all/", "/api/queue/all", "/api/queue/{id}", "/api/queue/{id}/").permitAll()
                 .antMatchers("/**").access("hasRole('Employers Administration')")
                 .and()
-                .formLogin();
+                .formLogin()
+                .and()
+                .logout();
     }
 
     @Override
